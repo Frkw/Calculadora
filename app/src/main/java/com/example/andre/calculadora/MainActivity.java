@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 //dfinir variable
     Button uno, dos,tres, cuatro,cinco, seis, siete,ocho, nueve, cero;
+    TextView visor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
           ocho = (Button) findViewById(R.id.eight);
           nueve = (Button) findViewById(R.id.nine);
           cero = (Button) findViewById(R.id.zero);
+        //asignar variable al textview
+        visor= (TextView) findViewById(R.id.result);
         //asociar evento click en cad uno de los botones
         uno.setOnClickListener(this);
         dos.setOnClickListener(this);
@@ -45,25 +49,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()) {
 
             case R.id.one:
+                //agregar uno al Textview
+                visor.append("1");
                 break;
 
             case R.id.two:
+
+                visor.append("2");
                 break;
             case R.id.three:
+                visor.append("3");
                 break;
             case R.id.four:
+                visor.append("4");
                 break;
             case R.id.five:
+                visor.append("5");
                 break;
             case R.id.six:
+                visor.append("6");
                 break;
             case R.id.seven:
+                visor.append("7");
                 break;
             case R.id.eight:
+                visor.append("8");
                 break;
             case R.id.nine:
+                visor.append("9");
                 break;
             case R.id.zero:
+                visor.append("0");
                 break;
 
 
