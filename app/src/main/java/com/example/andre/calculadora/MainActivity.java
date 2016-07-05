@@ -9,10 +9,19 @@ import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-//dfinir variable
-    Button uno, dos,tres, cuatro,cinco, seis, siete,ocho, nueve, cero;
-    TextView visor;
+//dfinir variables de controles
+    //botones
+    Button uno, dos, tres, cuatro, cinco, seis, siete, ocho, nueve, cero, coma, borrar, suma, resta, multi, divi, igual;
+    //textview
+    TextView visor, acumulador;
+
+    //variables que almacenan resultados
+   public double  resultado, valor1=0, valor2=0;
+    //variable para tipo de signo
+    char signo ='+';
+    char anterior ='=';
     @Override
+    //método al crear la instancia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -27,8 +36,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
           ocho = (Button) findViewById(R.id.eight);
           nueve = (Button) findViewById(R.id.nine);
           cero = (Button) findViewById(R.id.zero);
-        //asignar variable al textview
-        visor= (TextView) findViewById(R.id.result);
+          coma=(Button) findViewById(R.id.coma);
+          borrar= (Button) findViewById(R.id.clear);
+          suma= (Button) findViewById(R.id.sum);
+          resta= (Button) findViewById(R.id.subtraction);
+          multi= (Button) findViewById(R.id.multiplication);
+          divi=(Button) findViewById(R.id.division);
+          igual= (Button) findViewById(R.id.equal);
+
+        //asignar variable a los textview
+        visor= (TextView) findViewById(R.id.display);
+        acumulador= (TextView) findViewById(R.id.accumulator);
         //asociar evento click en cad uno de los botones
         uno.setOnClickListener(this);
         dos.setOnClickListener(this);
@@ -40,6 +58,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ocho.setOnClickListener(this);
         nueve.setOnClickListener(this);
         cero.setOnClickListener(this);
+        coma.setOnClickListener(this);
+        borrar.setOnClickListener(this);
+        suma.setOnClickListener(this);
+        resta.setOnClickListener(this);
+        multi.setOnClickListener(this);
+        divi.setOnClickListener(this);
+        igual.setOnClickListener(this);
          }
 
     @Override
@@ -49,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(v.getId()) {
 
             case R.id.one:
-                //agregar uno al Textview
+                //agregar uno al Textview visor
                 visor.append("1");
                 break;
 
@@ -81,9 +106,127 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.zero:
                 visor.append("0");
                 break;
+            case R.id.clear:
+            {
+                //se borra contenido textviews
+                visor.setText("");
+                acumulador.setText("");
+                valor1=0;
+                signo='+';
+                anterior='=';
+             break;
+            }
+            case R.id.sum: {
+                //ejecuto método calcular pasando como parámetro el símbolo "+"
+                Calcular('+');
+                break;
+            }
 
-
+            case R.id.subtraction: {
+                //ejecuto método calcular pasando como parámetro el símbolo "-"
+                Calcular('-');
+                break;
+            }
+            case R.id.multiplication: {
+                //ejecuto método calcular pasando como parámetro el símbolo "*"
+                Calcular('*');
+                break;
+            }
+            case R.id.division: {
+                //ejecuto método calcular pasando como parámetro el símbolo "/"
+                Calcular('/');
+                break;
+            }
+            case R.id.equal: {
+                //ejecuto método calcular pasando como parámetro el símbolo "="
+                Calcular('=');
+                break;
+            }
     }
     }
+
+    //método que calcula operaciones
+    public void Calcular(char sign){
+        //almacena parcialmente numero antes de ejecutar operacion
+        resultado = valor1;
+     // convierte el texto del visor a string
+
+    String visor_a_cadena = visor.getText().toString();
+        // convierte el string a double
+        valor2 = Double.parseDouble(visor_a_cadena);
+        //dependiendo del signo introducido ejecutar operación
+            if(sign == '+') {
+                // si es "+", suma ambas variables y asigna a resultado
+                resultado = valor1 + valor2;
+                //anterior signo antes de ejecutar igual
+                anterior = sign;
+            }
+            else if (sign == '-') {
+                // si es "-", resta ambas variables y asigna a resultado
+                resultado = valor1 - valor2;
+                //anterior signo
+                anterior = sign;
+            }
+            else if (sign == '*') {
+                // si es "*", multiplica ambas variables y asigna a resultado
+                resultado = valor1 * valor2;
+                anterior = sign;
+            }
+            else if (sign == '/') {
+                // si es "/", divide ambas variables y asigna a resultado
+                resultado = valor1 / valor2;
+                anterior = sign;
+            }
+        //despues de hacer la operación queda el resultado en valor1
+        valor1 = resultado;
+        //modificamos la variable de signo con la que definamos
+        signo = sign;
+
+        //si pulsamos el botón igual miramos el anterior signo para ejecutar operacion
+        if(sign == '='){
+
+            if(anterior == '+') {
+                // si es "+", suma ambas variables y asigna a resultado
+                resultado = valor1 + valor2;
+                //anterior signo antes de ejecutar igual
+
+            }
+            else if (anterior == '-') {
+                // si es "-", resta ambas variables y asigna a resultado
+                resultado = valor1 - valor2;
+                //anterior signo
+
+            }
+            else if (anterior == '*') {
+                // si es "*", multiplica ambas variables y asigna a resultado
+                resultado = valor1 * valor2;
+                anterior = sign;
+            }
+            else if (anterior == '/') {
+                // si es "/", divide ambas variables y asigna a resultado
+                resultado = valor1 / valor2;
+                anterior = sign;
+            }
+            //despues de hacer la operación queda el resultado en valor1
+            valor1 = resultado;
+            anterior='=';
+            //sacar resultado en ambos textview
+
+
+            visor.setText("" + valor1);
+            acumulador.setText("" + valor1);
+            valor1=0;
+        }
+          //si no pulso boton igual
+          else{
+            //borro el contenido visor principal
+            visor.setText("");
+            // muestro en el otro textview el valor con el signo
+            acumulador.setText("" + valor1 + signo);
+
+        }
+
+    }
+
 }
 
