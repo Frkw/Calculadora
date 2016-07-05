@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // si es "-", resta ambas variables y asigna a resultado
                 resultado = valor1 - valor2;
                 //anterior signo
-                anterior = sign;
+
             }
             else if (sign == '*') {
                 // si es "*", multiplica ambas variables y asigna a resultado
