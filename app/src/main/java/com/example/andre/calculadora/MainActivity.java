@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //variable para tipo de signo
     char signo ='+';
     char anterior ='=';
+    boolean inicialsuma=true, inicialresta = true, inicialmulti=true,inicialdivi=true;
     @Override
     //método al crear la instancia
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +112,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //se borra contenido textviews
                 visor.setText("");
                 acumulador.setText("");
-                valor1=0;
+                inicialsuma= true;
+                inicialmulti=true;
                 signo='+';
                 anterior='=';
              break;
@@ -147,8 +149,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //método que calcula operaciones
     public void Calcular(char sign){
+
+//valores iniciales dependiendo del signo
+         if ((inicialsuma==true)&& (sign == '+'))
+          valor1=0;
+        if ((inicialmulti==true)&& (sign == '*'))
+            valor1=1;
+
+
+
+
         //almacena parcialmente numero antes de ejecutar operacion
         resultado = valor1;
+
+
      // convierte el texto del visor a string
 
     String visor_a_cadena = visor.getText().toString();
@@ -160,17 +174,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 resultado = valor1 + valor2;
                 //anterior signo antes de ejecutar igual
                 anterior = sign;
+                inicialsuma= false;
             }
             else if (sign == '-') {
                 // si es "-", resta ambas variables y asigna a resultado
                 resultado = valor1 - valor2;
                 //anterior signo
+                anterior = sign;
 
             }
             else if (sign == '*') {
                 // si es "*", multiplica ambas variables y asigna a resultado
                 resultado = valor1 * valor2;
                 anterior = sign;
+                inicialmulti=false;
             }
             else if (sign == '/') {
                 // si es "/", divide ambas variables y asigna a resultado
@@ -216,6 +233,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             visor.setText("" + valor1);
             acumulador.setText("" + valor1);
             valor1=0;
+            inicialsuma= true;
+            inicialmulti=true;
         }
           //si no pulso boton igual
           else{
@@ -223,6 +242,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             visor.setText("");
             // muestro en el otro textview el valor con el signo
             acumulador.setText("" + valor1 + signo);
+            inicialsuma= false;
+            inicialmulti=false;
 
         }
 
