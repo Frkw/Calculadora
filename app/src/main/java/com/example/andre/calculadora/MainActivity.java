@@ -9,7 +9,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    //Definir variables de controles
+    //Inicializacion
     boolean decimal = false;
     boolean suma = false;
     boolean resta = false;
